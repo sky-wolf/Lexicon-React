@@ -8,8 +8,9 @@ export default class PersonList extends React.Component{
         people: [],
         searchString: '',
         selectedOption: '',
+        toggle: false,
     }
-
+    
     handleChange(selectedOption) 
     {
         this.setState({selectedOption});
@@ -24,7 +25,23 @@ export default class PersonList extends React.Component{
              
         })
     }
-    
+
+    handleSort = (event) => 
+    {
+        event.preventDefault();
+        const currentState = this.state.toggle;
+        if(currentState=== false)
+        {
+            this.state.people.sort((a, b) => (a.name < b.name ? -1 : 1));
+            
+        }else
+          {
+            this.state.people.sort((b, a) => (a.name < b.name ? -1 : 1));
+
+          }
+          this.setState({toggle: !currentState}); 
+    };
+            
     handleSubmit = (event) => 
     {
         event.preventDefault();
@@ -42,8 +59,9 @@ export default class PersonList extends React.Component{
                 <form onSubmit={this.handleSubmit}>
                     <label>Name:</label>
                     <input type="text" onChange={event => this.setState({searchString: event.target.value})}/>
-                    <button type="submit">Sort</button>
+                    <button type="submit">Search</button>
                 </form>
+                <button onClick={this.handleSort}>Sort</button>
                 <Table>
                     <thead>
                         <tr>

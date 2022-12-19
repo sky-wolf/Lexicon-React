@@ -8,6 +8,7 @@ export default class CityList extends React.Component{
         city: [],
         searchString: '',
         selectedOption: '',
+        toggle: false,
     }
 
     
@@ -25,6 +26,22 @@ export default class CityList extends React.Component{
              
         })
     }
+
+    handleSort = (event) => 
+    {
+        event.preventDefault();
+        const currentState = this.state.toggle;
+        if(currentState=== false)
+        {
+            this.state.city.sort((a, b) => (a.name < b.name ? -1 : 1));
+            
+        }else
+          {
+            this.state.city.sort((b, a) => (a.name < b.name ? -1 : 1));
+
+          }
+          this.setState({toggle: !currentState}); 
+    };
     
     handleSubmit = (event) => 
     {
@@ -48,6 +65,7 @@ export default class CityList extends React.Component{
                     <button type="submit">Sort</button>
                 </form>
                 <hr/>
+                <button onClick={this.handleSort}>Sort</button>
                 <Table>
                     <thead>
                         <tr>

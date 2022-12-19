@@ -8,6 +8,7 @@ export default class CountryList extends React.Component{
         country: [],
         searchString: '',
         selectedOption: '',
+        toggle: false,
     }
 
     
@@ -26,6 +27,22 @@ export default class CountryList extends React.Component{
         })
     }
     
+    handleSort = (event) => 
+    {
+        event.preventDefault();
+        const currentState = this.state.toggle;
+        if(currentState=== false)
+        {
+            this.state.country.sort((a, b) => (a.name < b.name ? -1 : 1));
+            
+        }else
+          {
+            this.state.country.sort((b, a) => (a.name < b.name ? -1 : 1));
+
+          }
+          this.setState({toggle: !currentState}); 
+    };
+
     handleSubmit = (event) => 
     {
         event.preventDefault();
@@ -45,6 +62,7 @@ export default class CountryList extends React.Component{
                     <button type="submit">Sort</button>
                 </form>
                 <hr/>
+                <button onClick={this.handleSort}>Sort</button>
                 <Table>
                     <thead>
                         <tr>
